@@ -40,9 +40,9 @@ server.get('/weather', (req, res) => {
     let cityData;
 
     //create function to  get data weather from 
-    //&& city.lat == weatherLatData && city.lon == weatherLonData
+    //
     let weatherCity = weatherData.find(city => {
-        if (city.city_name ==weatherCityData ) {
+        if (city.city_name ==weatherCityData&& city.lat == weatherLatData && city.lon == weatherLonData ) {
             cityData = new Forecast(city)
             return city
 
