@@ -35,23 +35,28 @@ server.get('/test', (req, res) => {
 // http://localhost:3001/weather?city_name=Amman?lat=31.95?lon=35.91
 server.get('/weather', (req, res) => {
     let weatherCityData = req.query.city_name;
-    let weatherLatData = req.query.lat;
-    let weatherLonData = req.query.lon;
-    let cityData;
+    // let weatherLatData = req.query.lat;
+    // let weatherLonData = req.query.lon;
+    //let cityData;
 
     //create function to  get data weather from 
-    //
+    //&& city.lat == weatherLatData && city.lon == weatherLonData
     let weatherCity = weatherData.find(city => {
-        if (city.city_name ==weatherCityData&& city.lat == weatherLatData && city.lon == weatherLonData ) {
-            cityData = new Forecast(city)
+        if (city.city_name.toLowerCase()==weatherCityData.toLowerCase()) {
+            //cityData = new Forecast(city)
             return city
 
         }
 
     });
     //console.log(weatherCityData)
-    res.send(cityData)
 
+
+
+let foccasrtDataArr= weatherCity.data.map(item=>{
+    return new Forecast(item)
+})
+res.send(foccasrtDataArr)
 })
 
 //here example what we want in class 
@@ -59,12 +64,9 @@ server.get('/weather', (req, res) => {
 //     "date": "2021-04-01
 class Forecast {
     constructor(arr) {
-        this.data = arr.data.map(i => {
-            let low = i.low_temp;
-            let high = i.max_temp;
-            return { 'description': 'low of' + low + ',high of' + high + 'with' + i.weather.description, 'date': i.datetime }
 
-        })
+        this.date = arr.valid_date
+        this.descrption = arr.weather.description;       
 
 
     }
