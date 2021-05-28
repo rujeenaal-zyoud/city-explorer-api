@@ -9,6 +9,7 @@ const axios = require('axios');
 const Weather =require('./Component/Weather')
 const Movie = require('./Component/Movie')
 
+//we should impoert the functions in modules(Companant)
 const weatherHandler =require('./Component/Weather.js')
 const movieHandler =require('./Component/Movie.js')
 
