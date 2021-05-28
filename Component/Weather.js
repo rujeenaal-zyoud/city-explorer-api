@@ -8,6 +8,7 @@ function weatherHandler(req, res) {
     let keyW = process.env.WEATHER_API;
 
     let url = `https://api.weatherbit.io/v2.0/forecast/daily?city=${weatherCityData}&key=${keyW}`
+// add memory for API request
 
     if (WinMemory[weatherCityData] !== undefined) {
         console.log('get the Weather data from the Memory')

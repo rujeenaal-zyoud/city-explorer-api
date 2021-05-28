@@ -9,7 +9,7 @@ function movieHandler(req, res) {
 let keyM = process.env.MOVIE_API;
     let movie = req.query.query;
     let urlM = `https://api.themoviedb.org/3/search/movie?api_key=${keyM}&query=${movie}`
-
+// add memory for API request
     if (inMemory[movie] !== undefined) {
         console.log('get the Moive data from the Memory')
         res.send(inMemory[movie])
@@ -32,7 +32,6 @@ let keyM = process.env.MOVIE_API;
             response.status(500).send('error', err);
           })
       }
-//
 
 }
 
