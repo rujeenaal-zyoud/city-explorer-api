@@ -2,24 +2,38 @@ const axios = require('axios');
 
 module.exports =movieHandler;
 
+let inMemory={};
 function movieHandler(req, res) {
     
 
 let keyM = process.env.MOVIE_API;
     let movie = req.query.query;
     let urlM = `https://api.themoviedb.org/3/search/movie?api_key=${keyM}&query=${movie}`
-
-
-    axios.get(urlM)
-        .then(result => {
-            let moiveArr = result.data.results.map(item => new Movie(item));
-            res.status(200).send(moiveArr);
-
-        })
+// add memory for API request
+    if (inMemory[movie] !== undefined) {
+        console.log('get the Moive data from the Memory')
+        res.send(inMemory[movie])
+      } 
       
-        .catch(console.error)
-    }
+      else {
+        console.log('get the Moive data  from the API');
+        axios
+          .get(urlM)
+            .then(result => {
+                let moiveArr = result.data.results.map(item => new Movie(item));
+              //
+            inMemory[movie] = moiveArr;
+            res.status(200).send(inMemory[movie]);
 
+    
+          })
+          .catch(err => {
+            console.err('error', err);
+            response.status(500).send('error', err);
+          })
+      }
+
+}
 
 
 
