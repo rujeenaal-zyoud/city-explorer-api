@@ -19,50 +19,10 @@ server.get('/', (request, response) => {
 })
 
 
-const PORT = process.env.PORT || 3000 ;
-let WinMemory={};
+const PORT = process.env.PORT  ;
 
-server.get('/weather', (req, res)=> {
-    let weatherCityData = req.query.city_name;
-    let keyW = process.env.WEATHER_API;
-console.log('weatherCityData',weatherCityData);
-console.log("keyW",keyW);
-    let url = `https://api.weatherbit.io/v2.0/forecast/daily?city=${weatherCityData}&key=${keyW}`
-// add memory for API request
+server.get('/weather',weatherHandler );
 
-    if (WinMemory[weatherCityData] !== undefined) {
-        console.log('get the Weather data from the Memory')
-        res.send(WinMemory[weatherCityData])
-      } 
-      else {
-        console.log('get the Weather data from the API');
-        axios
-          .get(url)
-            .then(result => {
-                console.log('inside axios ',result.data)
-                let foccasrtDataArr = result.data.data.map(item => new Forecast(item))              //
-                WinMemory[weatherCityData] = foccasrtDataArr;
-            res.status(200).send(WinMemory[weatherCityData]);
-          })
-          .catch(err => {
-            //console.err('error', err);
-            res.status(500).send('error', err);
-          })
-          
-          
-
-}
-});
-
-class Forecast {
-    constructor(item) {
-
-        this.date = item.valid_date
-        this.descrption = item.weather.description;
-
-
-    }
-}
 
 server.get('/movies', movieHandler);
 
