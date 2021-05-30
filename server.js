@@ -22,7 +22,7 @@ server.get('/', (request, response) => {
 const PORT = process.env.PORT || 3000 ;
 let WinMemory={};
 
-server.get('/weather', function weatherHandler(req, res) {
+server.get('/weather', (req, res)=> {
     let weatherCityData = req.query.city_name;
     let keyW = process.env.WEATHER_API;
 console.log('weatherCityData',weatherCityData);
