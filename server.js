@@ -25,7 +25,8 @@ let WinMemory={};
 server.get('/weather', function weatherHandler(req, res) {
     let weatherCityData = req.query.city_name;
     let keyW = process.env.WEATHER_API;
-
+console.log('weatherCityData',weatherCityData);
+console.log("keyW",keyW);
     let url = `https://api.weatherbit.io/v2.0/forecast/daily?city=${weatherCityData}&key=${keyW}`
 // add memory for API request
 
@@ -38,12 +39,13 @@ server.get('/weather', function weatherHandler(req, res) {
         axios
           .get(url)
             .then(result => {
+                console.log('inside axios ',result.data)
                 let foccasrtDataArr = result.data.data.map(item => new Forecast(item))              //
                 WinMemory[weatherCityData] = foccasrtDataArr;
             res.status(200).send(WinMemory[weatherCityData]);
           })
           .catch(err => {
-            console.err('error', err);
+            //console.err('error', err);
             res.status(500).send('error', err);
           })
           
